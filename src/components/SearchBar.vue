@@ -1,6 +1,6 @@
 <template>
   <div class="search-container">
-    <div class="search-bar">
+    <div v-if="!searchPerformed" class="search-bar">
       <img
         src="@/assets/search-icon.svg"
         alt="Search"
@@ -10,10 +10,17 @@
       <input
         v-model="query"
         type="text"
-        placeholder="Search for photo"
+        placeholder="Search for a photo"
         @keyup.enter="search"
       />
       <button @click="search">Search</button>
+    </div>
+    <div v-else class="search-results-header">
+      <button class="back-button" @click="resetSearch">←</button>
+      <h2>
+        Search Results for "<span>{{ query }}</span
+        >"
+      </h2>
     </div>
   </div>
 </template>
@@ -21,13 +28,21 @@
 <script setup>
 import { ref } from "vue";
 
-const emit = defineEmits(["search"]);
+const emit = defineEmits(["search", "reset"]);
 const query = ref("");
+const searchPerformed = ref(false);
 
 const search = () => {
   if (query.value.trim()) {
+    searchPerformed.value = true;
     emit("search", query.value);
   }
+};
+
+const resetSearch = () => {
+  searchPerformed.value = false;
+  query.value = "";
+  emit("reset");
 };
 </script>
 
@@ -77,7 +92,29 @@ button {
   cursor: pointer;
 }
 
-button img {
-  width: 20px;
+.search-results-header {
+  text-align: center;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.search-results-header h2 {
+  font-weight: bold;
+}
+
+.search-results-header span {
+  color: #0073e6;
+}
+
+.back-button {
+  background: black;
+  border-radius: 50%;
+  height: 30px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  margin-right: 10px;
 }
 </style>
