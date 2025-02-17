@@ -1,16 +1,19 @@
 <template>
   <div class="search-container">
     <div class="search-bar">
+      <img
+        src="@/assets/search-icon.svg"
+        alt="Search"
+        class="search-icon"
+        :class="{ hidden: query.length > 0 }"
+      />
       <input
         v-model="query"
         type="text"
         placeholder="Search for photo"
         @keyup.enter="search"
       />
-      <button @click="search">
-        <!-- <img src="@/assets/search-icon.svg" alt="Search" /> -->
-        Search
-      </button>
+      <button @click="search">Search</button>
     </div>
   </div>
 </template>
@@ -42,8 +45,20 @@ const search = () => {
   background: white;
   border-radius: 50px;
   padding: 10px 20px;
-  width: 400px;
+  width: 500px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.search-icon {
+  width: 20px;
+  position: absolute;
+  left: 15px;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.hidden {
+  opacity: 0;
 }
 
 input {
@@ -51,7 +66,9 @@ input {
   border: none;
   outline: none;
   font-size: 16px;
-  padding: 10px;
+  padding: 10px 10px 10px 40px;
+  width: 100%;
+  background: transparent;
 }
 
 button {

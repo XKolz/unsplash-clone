@@ -2,10 +2,7 @@
   <div class="modal" @click.self="$emit('close')">
     <div class="modal-content">
       <!-- Close Button -->
-      <button class="close-btn" @click="$emit('close')">
-        <!-- × -->
-        <img src="../assets/icons/close-icon.svg" alt="Close" />
-      </button>
+      <button class="close-btn" @click="$emit('close')">×</button>
 
       <!-- Image -->
       <img
