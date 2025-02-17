@@ -4,9 +4,10 @@
       <div v-for="n in 6" :key="n" class="skeleton"></div>
     </div>
     <div
-      v-for="photo in photos"
+      v-for="(photo, index) in photos"
       :key="photo.id"
       class="image-card"
+      :class="`span-${(index % 5) + 1}`"
       @click="$emit('image-click', photo)"
     >
       <img :src="photo.urls.small" :alt="photo.alt_description" />
@@ -29,20 +30,38 @@ defineProps({
 <style scoped>
 .image-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Ensure 3 columns */
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  /* grid-auto-rows: 10px;  */
+  gap: 15px;
   padding: 20px;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: auto;
+  grid-auto-flow: dense; /* Helps fill gaps efficiently */
 }
 
 .image-card {
-  width: 100%; /* Fill the grid column */
-  height: 320px;
+  width: 100%;
   position: relative;
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
   transition: transform 0.3s ease-in-out;
+}
+
+/* Assign random row spans for a natural look */
+.image-card.span-1 {
+  grid-row: span 25;
+}
+.image-card.span-2 {
+  grid-row: span 30;
+}
+.image-card.span-3 {
+  grid-row: span 20;
+}
+.image-card.span-4 {
+  grid-row: span 35;
+}
+.image-card.span-5 {
+  grid-row: span 25;
 }
 
 .image-card img {
@@ -55,13 +74,13 @@ defineProps({
 /* Responsive Fix */
 @media (max-width: 1024px) {
   .image-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 images per row */
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
   .image-grid {
-    grid-template-columns: repeat(1, 1fr); /* 1 image per row */
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 

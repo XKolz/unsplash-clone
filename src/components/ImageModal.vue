@@ -1,9 +1,8 @@
 <template>
   <div class="modal" @click.self="$emit('close')">
+    <!-- Close Button -->
+    <button class="close-btn" @click="$emit('close')">×</button>
     <div class="modal-content">
-      <!-- Close Button -->
-      <button class="close-btn" @click="$emit('close')">×</button>
-
       <!-- Image -->
       <img
         :src="photo.urls.regular"
